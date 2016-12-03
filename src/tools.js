@@ -42,6 +42,7 @@ function loadUser(opts, queryParams, done){
   if(!query) return done('no query parameter given') 
   var storageURL = getStorageURL(opts, '?query=' + JSON.stringify(query))
 
+  console.log('load user: ' + storageURL)
   jsonist.get(storageURL, function(err, data, storageres){
     if(err) return done(err)
 
@@ -74,8 +75,10 @@ function loadUserQuery(queryParams){
 
   if(!useQueryParam) return null
   var query = {}
-  useQueryParam = DATA_QUERY_MAP[useQueryParam] ? DATA_QUERY_MAP[useQueryParam] : useQueryParam
-  query[useQueryParam] = queryParams[useQueryParam]
+  var actualQueryParam = DATA_QUERY_MAP[useQueryParam] || useQueryParam
+  query[actualQueryParam] = queryParams[useQueryParam]
+
+  if(Object.keys(query || {}).length<=0) return null
   return query
 }
 
