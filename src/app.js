@@ -66,7 +66,7 @@ module.exports = function(opts){
         if(err) return tools.errorHandler(res, {error:err.toString(),authenticated:false})
 
         if(!user || !tools.checkPassword(plainTextPassword, user.hashed_password, user.salt)){
-          return tools.errorHandler(res, {error:'incorrect details',authenticated:false})
+          return tools.errorHandler(res, {error:'incorrect details',authenticated:false}, 401)
         }
         tools.jsonres(res, {
           authenticated:true,
