@@ -42,7 +42,6 @@ function loadUser(opts, queryParams, done){
   if(!query) return done('no query parameter given') 
   var storageURL = getStorageURL(opts, '?query=' + JSON.stringify(query))
 
-  console.log('load user: ' + storageURL)
   jsonist.get(storageURL, function(err, data, storageres){
     if(err) return done(err)
 

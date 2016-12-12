@@ -3,12 +3,10 @@ var jsonist = require('jsonist')
 var async = require('async')
 var concat = require('concat-stream')
 var path = require('path')
-var morgan = require('morgan')
+var Logger = require('./logger')
 var HttpHashRouter = require('http-hash-router')
 
 var tools = require('./tools')
-
-var logger = morgan('combined')
 
 var VERSION = require(path.join(__dirname, '..', 'package.json')).version
 
@@ -101,19 +99,23 @@ module.exports = function(opts){
     })
   })
 
+  var logger = Logger({
+    name:'passport-slim-instant-mongo'
+  })
+
   function handler(req, res) {
+
+    logger(req, res)
 
     function onError(err) {
       if (err) {
+        req.log.error(err)
         res.statusCode = err.statusCode || 500;
         res.end(err.message);
       }
     }
 
-    logger(req, res, function (err) {
-      if(err) return onError(err)
-      router(req, res, {}, onError)
-    })
+    router(req, res, {}, onError)
   }
 
   return handler
