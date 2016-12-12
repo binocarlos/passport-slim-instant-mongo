@@ -1,6 +1,5 @@
 {
-  "name": "passport-slim-example-userstorage",
-  "private": true,
+  "name": "passport-slim-instant-mongo",
   "version": "1.1.0",
   "description": "the user storage api for passport-slim",
   "main": "index.js",
